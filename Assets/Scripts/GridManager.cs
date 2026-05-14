@@ -21,7 +21,7 @@ public class GridManager : MonoBehaviour
     // El prefab del cuadrado visual del borde y de las áreas ya capturadas
     public GameObject cellPrefab;
 
-    // El prefab del cuadrado visual del rastro mientras se está dibujando (estética distinta)
+    // El prefab del cuadrado visual del rastro mientras se está dibujando
     public GameObject trailPrefab;
 
     // Matriz bidimensional que guarda el estado lógico de cada celda
@@ -104,6 +104,23 @@ public class GridManager : MonoBehaviour
         return state == CellState.Border || state == CellState.Captured;
     }
 
+    // Indica si una posición es una celda de rastro (el jugador no puede volver a pisarla)
+    public bool IsTrailCell(Vector2 position)
+    {
+        // Si está fuera de la grilla, no es rastro
+        if (!IsValidPosition(position))
+        {
+            return false;
+        }
+
+        // Convertimos la posición a coordenadas de matriz
+        int x = Mathf.RoundToInt(position.x);
+        int y = Mathf.RoundToInt(position.y);
+
+        // Es rastro solo si la celda está en estado Trail
+        return _gridMatrix[x, y] == CellState.Trail;
+    }
+
     // Indica si una posición es una pared para los enemigos (algo pintado o fuera de la grilla)
     public bool IsWallForEnemy(Vector2 position)
     {
@@ -148,7 +165,6 @@ public class GridManager : MonoBehaviour
         _hasPendingTrail = true;
 
         // Creamos visualmente el bloque de rastro y lo guardamos en la lista
-        // Lo guardamos para poder destruirlo y reemplazarlo cuando se cierre el ciclo
         GameObject trailObject = Instantiate(trailPrefab, position, Quaternion.identity, transform);
         _activeTrailObjects.Add(trailObject);
     }
@@ -182,7 +198,7 @@ public class GridManager : MonoBehaviour
         // Convertimos todo el rastro pendiente en área capturada permanente (cambia visual también)
         ConvertAllTrailToCaptured();
 
-        // Buscamos las áreas vacías que quedaron encerradas y rellenamos la más chica
+        // Buscamos las áreas vacías que quedaron encerradas y rellenamos la más chica sin enemigos
         FillEnclosedAreas();
 
         // Limpiamos la bandera: ya no hay rastro pendiente
@@ -221,7 +237,7 @@ public class GridManager : MonoBehaviour
         _activeTrailObjects.Clear();
     }
 
-    // Detecta los grupos de celdas vacías separados entre sí y rellena el más chico
+    // Detecta los grupos de celdas vacías separados entre sí y rellena el más chico SIN enemigos
     private void FillEnclosedAreas()
     {
         // Buscamos todos los grupos conectados de celdas vacías
@@ -233,11 +249,62 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        // Buscamos el grupo con menos celdas: ese es el "interior" del rastro cerrado
-        List<Vector2Int> smallestComponent = GetSmallestComponent(emptyComponents);
+        // Obtenemos las posiciones de todos los enemigos para no tapar la zona donde están
+        HashSet<Vector2Int> enemyCells = GetEnemyCells();
 
-        // Rellenamos cada celda del grupo más chico
-        FillCells(smallestComponent);
+        // Nos quedamos solo con los grupos que NO contienen ningún enemigo
+        List<List<Vector2Int>> safeComponents = new List<List<Vector2Int>>();
+        foreach (List<Vector2Int> component in emptyComponents)
+        {
+            if (!ComponentContainsEnemy(component, enemyCells))
+            {
+                safeComponents.Add(component);
+            }
+        }
+
+        // Si todos los grupos tienen enemigos, no rellenamos nada (caso raro)
+        if (safeComponents.Count == 0)
+        {
+            return;
+        }
+
+        // De los grupos sin enemigos, encontramos el más chico (el "interior" del rastro)
+        List<Vector2Int> smallestSafeComponent = GetSmallestComponent(safeComponents);
+
+        // Rellenamos ese grupo
+        FillCells(smallestSafeComponent);
+    }
+
+    // Devuelve las coordenadas de celda donde hay enemigos actualmente
+    private HashSet<Vector2Int> GetEnemyCells()
+    {
+        HashSet<Vector2Int> enemyCells = new HashSet<Vector2Int>();
+
+        // Le pedimos a Unity todos los EnemyController activos en la escena
+        EnemyController[] enemies = FindObjectsByType<EnemyController>(FindObjectsSortMode.None);
+
+        // Convertimos la posición de cada enemigo a coordenadas de celda
+        foreach (EnemyController enemy in enemies)
+        {
+            int x = Mathf.RoundToInt(enemy.transform.position.x);
+            int y = Mathf.RoundToInt(enemy.transform.position.y);
+            enemyCells.Add(new Vector2Int(x, y));
+        }
+
+        return enemyCells;
+    }
+
+    // Indica si un grupo de celdas contiene la posición de algún enemigo
+    private bool ComponentContainsEnemy(List<Vector2Int> component, HashSet<Vector2Int> enemyCells)
+    {
+        foreach (Vector2Int cell in component)
+        {
+            if (enemyCells.Contains(cell))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Recorre la grilla y devuelve listas de celdas vacías agrupadas por conexión

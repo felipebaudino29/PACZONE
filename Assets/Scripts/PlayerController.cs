@@ -41,14 +41,25 @@ public class PlayerController : MonoBehaviour
             float moveX = Input.GetAxisRaw("Horizontal");
             float moveY = Input.GetAxisRaw("Vertical");
 
-            // Si hay tecla apretada, actualizamos la dirección (evitando movimiento diagonal)
+            // Si hay tecla apretada, intentamos actualizar la dirección
+            // Solo aceptamos el cambio si la nueva dirección NO lleva al rastro propio
             if (moveX != 0)
             {
-                _currentDirection = new Vector2(moveX, 0);
+                Vector2 candidateDirection = new Vector2(moveX, 0);
+                Vector2 candidateTarget = (Vector2)transform.position + candidateDirection;
+                if (!gridManager.IsTrailCell(candidateTarget))
+                {
+                    _currentDirection = candidateDirection;
+                }
             }
             else if (moveY != 0)
             {
-                _currentDirection = new Vector2(0, moveY);
+                Vector2 candidateDirection = new Vector2(0, moveY);
+                Vector2 candidateTarget = (Vector2)transform.position + candidateDirection;
+                if (!gridManager.IsTrailCell(candidateTarget))
+                {
+                    _currentDirection = candidateDirection;
+                }
             }
             else if (isOnSafeZone)
             {
@@ -60,14 +71,16 @@ public class PlayerController : MonoBehaviour
             // Calculamos cuál sería la próxima celda teórica a la que queremos ir
             Vector2 possibleTarget = (Vector2)transform.position + _currentDirection;
 
-            // Confirmamos el movimiento solo si hay dirección Y la celda destino es válida
-            if (_currentDirection != Vector2.zero && gridManager.IsValidPosition(possibleTarget))
+            // Confirmamos el movimiento solo si hay dirección, es válida la posición Y no es rastro
+            if (_currentDirection != Vector2.zero 
+                && gridManager.IsValidPosition(possibleTarget) 
+                && !gridManager.IsTrailCell(possibleTarget))
             {
                 _targetPosition = possibleTarget;
             }
             else
             {
-                // Si no hay para dónde ir, frenamos
+                // Si no hay para dónde ir (límite o rastro), frenamos
                 _currentDirection = Vector2.zero;
             }
         }
