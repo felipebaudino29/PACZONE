@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 28
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -117,11 +117,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 192
-        height: 124
+        y: 99
+        width: 24
+        height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,11 +134,693 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 99
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4a3cd581b1c44484aea2cda4ee7349d
+      internalID: 1156511422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 99
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e71d62a66bcf4d24be8b630a67027ba
+      internalID: 1790295981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_3
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 99
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36c6170c177d4452893e1f8cd683c4a3
+      internalID: 477540547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_4
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 99
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a50f95e15ac54ed3b60f60f175f1c47
+      internalID: 1219205853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_5
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 99
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cd6a7100b13c4499bce102184b84cbb
+      internalID: 1848625488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_6
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 99
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 552176ea3f3394ded882d17a24018b30
+      internalID: 1526722313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_7
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 99
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b17c9c3c64b3f48f38fed29fd4b3971b
+      internalID: 1932578115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 74
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd83d0c0bb8994f6ebfff4b040fe3685
+      internalID: 1718963814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_9
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 74
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d97a37739908484890fe30eddce39bc
+      internalID: 43607175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_10
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 74
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f65bf00f5b2748c5a2ca9d2181dcfee
+      internalID: 1341344423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_11
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 74
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9123bd1bf333d4fbfb077a0f23ddd3b4
+      internalID: -1448740069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_12
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 74
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ddbca18d0df540299352b4f13f700ac
+      internalID: -1202091251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_13
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 74
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1851083b74e64664a5f3224d6477031
+      internalID: -1970462319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_14
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 74
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a97f48fd4e5c4ab98d4a3b8e1148fd0
+      internalID: 1201061570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_15
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 74
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b33878fb9e54435d806912a7b828f20
+      internalID: -863912492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 49
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe5c16b55992f4745ac6a882320c0ce9
+      internalID: 932634364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_17
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 49
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6775099f1a5b5401bbb4643073ea9f68
+      internalID: -442483201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_18
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 49
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb332ac4408e641dfa66ec2698363a0f
+      internalID: 146041496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_19
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 49
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a27039465bf92404fa0386b579e097a5
+      internalID: -1942030557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_20
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 49
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa6866ff8cf7e423ead45f41991857d0
+      internalID: -45167931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_21
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 49
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c43571644863d487587eb94f373193f1
+      internalID: 1294938666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_22
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 49
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd55bbc6f72f3429aaa0cafadf05a88f
+      internalID: 749591267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_23
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 49
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b0c92015b9254561992449ed63e57e3
+      internalID: -307353208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 24
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ac6d524fa5084da5a1b00cd72f49bd1
+      internalID: -1738076908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_25
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 24
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 959326a91d95e42a7a7f062a49f983a3
+      internalID: -556644077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_26
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 24
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9ab7f9344a3341ceb5defbfe8e72941
+      internalID: 691989038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_27
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 24
+        width: 24
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15d28098be0d541f4858fa3cd7bc6c52
+      internalID: -477556401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_28
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 24
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a9e530afa4a94a15a75eb01dd8ed503
+      internalID: -1805461517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_29
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 24
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86b34ef2c19f04f359bc365146b463e8
+      internalID: -1480463495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_30
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 24
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 379e54db3859e4587a0645ecb77ef29f
+      internalID: -2026265348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Browser Games - Pac-Xon - Enemies - Ghosts_31
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 26
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd25c5ebff46c4c39a332a9919f9030d
+      internalID: -1481290588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e5b597ae70d6141a69556550539e870f
     internalID: 0
     vertices: []
     indices: 
@@ -146,9 +828,42 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":24.0,"y":25.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Browser Games - Pac-Xon - Enemies - Ghosts_0: -3408654728303486197
+      Browser Games - Pac-Xon - Enemies - Ghosts_1: 1156511422
+      Browser Games - Pac-Xon - Enemies - Ghosts_10: 1341344423
+      Browser Games - Pac-Xon - Enemies - Ghosts_11: -1448740069
+      Browser Games - Pac-Xon - Enemies - Ghosts_12: -1202091251
+      Browser Games - Pac-Xon - Enemies - Ghosts_13: -1970462319
+      Browser Games - Pac-Xon - Enemies - Ghosts_14: 1201061570
+      Browser Games - Pac-Xon - Enemies - Ghosts_15: -863912492
+      Browser Games - Pac-Xon - Enemies - Ghosts_16: 932634364
+      Browser Games - Pac-Xon - Enemies - Ghosts_17: -442483201
+      Browser Games - Pac-Xon - Enemies - Ghosts_18: 146041496
+      Browser Games - Pac-Xon - Enemies - Ghosts_19: -1942030557
+      Browser Games - Pac-Xon - Enemies - Ghosts_2: 1790295981
+      Browser Games - Pac-Xon - Enemies - Ghosts_20: -45167931
+      Browser Games - Pac-Xon - Enemies - Ghosts_21: 1294938666
+      Browser Games - Pac-Xon - Enemies - Ghosts_22: 749591267
+      Browser Games - Pac-Xon - Enemies - Ghosts_23: -307353208
+      Browser Games - Pac-Xon - Enemies - Ghosts_24: -1738076908
+      Browser Games - Pac-Xon - Enemies - Ghosts_25: -556644077
+      Browser Games - Pac-Xon - Enemies - Ghosts_26: 691989038
+      Browser Games - Pac-Xon - Enemies - Ghosts_27: -477556401
+      Browser Games - Pac-Xon - Enemies - Ghosts_28: -1805461517
+      Browser Games - Pac-Xon - Enemies - Ghosts_29: -1480463495
+      Browser Games - Pac-Xon - Enemies - Ghosts_3: 477540547
+      Browser Games - Pac-Xon - Enemies - Ghosts_30: -2026265348
+      Browser Games - Pac-Xon - Enemies - Ghosts_31: -1481290588
+      Browser Games - Pac-Xon - Enemies - Ghosts_4: 1219205853
+      Browser Games - Pac-Xon - Enemies - Ghosts_5: 1848625488
+      Browser Games - Pac-Xon - Enemies - Ghosts_6: 1526722313
+      Browser Games - Pac-Xon - Enemies - Ghosts_7: 1932578115
+      Browser Games - Pac-Xon - Enemies - Ghosts_8: 1718963814
+      Browser Games - Pac-Xon - Enemies - Ghosts_9: 43607175
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -18,10 +18,10 @@ public class GridManager : MonoBehaviour
     // Cantidad de filas (alto de la grilla)
     public int rows = 30;
 
-    // El prefab del cuadrado visual del borde
+    // El prefab del cuadrado visual del borde y de las áreas ya capturadas
     public GameObject cellPrefab;
 
-    // El prefab del cuadrado visual del rastro (color/sprite diferente)
+    // El prefab del cuadrado visual del rastro mientras se está dibujando (estética distinta)
     public GameObject trailPrefab;
 
     // Matriz bidimensional que guarda el estado lógico de cada celda
@@ -29,6 +29,9 @@ public class GridManager : MonoBehaviour
 
     // Bandera interna que indica si hay rastro sin cerrar
     private bool _hasPendingTrail = false;
+
+    // Lista de GameObjects del rastro pendiente, los necesitamos para destruirlos al cerrar
+    private List<GameObject> _activeTrailObjects = new List<GameObject>();
 
     private void Start()
     {
@@ -101,6 +104,24 @@ public class GridManager : MonoBehaviour
         return state == CellState.Border || state == CellState.Captured;
     }
 
+    // Indica si una posición es una pared para los enemigos (algo pintado o fuera de la grilla)
+    public bool IsWallForEnemy(Vector2 position)
+    {
+        // Si está fuera de la grilla, la consideramos pared (así rebota en el límite)
+        if (!IsValidPosition(position))
+        {
+            return true;
+        }
+
+        // Convertimos la posición a coordenadas de matriz
+        int x = Mathf.RoundToInt(position.x);
+        int y = Mathf.RoundToInt(position.y);
+
+        // El enemigo rebota contra cualquier cosa pintada: borde, rastro o área capturada
+        CellState state = _gridMatrix[x, y];
+        return state == CellState.Border || state == CellState.Trail || state == CellState.Captured;
+    }
+
     // Método público que marca una celda como rastro si estaba vacía
     public void MarkTrail(Vector2 position)
     {
@@ -126,8 +147,10 @@ public class GridManager : MonoBehaviour
         // Activamos la bandera porque ahora hay rastro sin cerrar
         _hasPendingTrail = true;
 
-        // Creamos visualmente el bloque de rastro en la posición de la celda
-        Instantiate(trailPrefab, position, Quaternion.identity, transform);
+        // Creamos visualmente el bloque de rastro y lo guardamos en la lista
+        // Lo guardamos para poder destruirlo y reemplazarlo cuando se cierre el ciclo
+        GameObject trailObject = Instantiate(trailPrefab, position, Quaternion.identity, transform);
+        _activeTrailObjects.Add(trailObject);
     }
 
     // Método público que intenta cerrar el rastro pendiente si el jugador está en zona permanente
@@ -156,7 +179,7 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        // Convertimos todo el rastro pendiente en área capturada permanente
+        // Convertimos todo el rastro pendiente en área capturada permanente (cambia visual también)
         ConvertAllTrailToCaptured();
 
         // Buscamos las áreas vacías que quedaron encerradas y rellenamos la más chica
@@ -166,21 +189,36 @@ public class GridManager : MonoBehaviour
         _hasPendingTrail = false;
     }
 
-    // Convierte todas las celdas en estado Trail a estado Captured (visualmente quedan igual)
+    // Convierte todas las celdas Trail a Captured (cambiando el visual al del borde)
     private void ConvertAllTrailToCaptured()
     {
-        // Recorremos toda la matriz buscando celdas de rastro
+        // Actualizamos el estado lógico de cada celda Trail
         for (int x = 0; x < columns; x++)
         {
             for (int y = 0; y < rows; y++)
             {
                 if (_gridMatrix[x, y] == CellState.Trail)
                 {
-                    // Cambiamos solo el estado lógico (el GameObject visual no se toca)
                     _gridMatrix[x, y] = CellState.Captured;
                 }
             }
         }
+
+        // Reemplazamos cada visual del rastro por uno de borde/área capturada
+        foreach (GameObject trailObject in _activeTrailObjects)
+        {
+            // Tomamos la posición del visual del rastro para crear el nuevo en el mismo lugar
+            Vector3 position = trailObject.transform.position;
+
+            // Creamos un visual de borde en esa posición (estética de ladrillo)
+            Instantiate(cellPrefab, position, Quaternion.identity, transform);
+
+            // Destruimos el visual viejo del rastro
+            Destroy(trailObject);
+        }
+
+        // Vaciamos la lista porque ya no hay rastro pendiente
+        _activeTrailObjects.Clear();
     }
 
     // Detecta los grupos de celdas vacías separados entre sí y rellena el más chico
@@ -291,7 +329,7 @@ public class GridManager : MonoBehaviour
         return smallest;
     }
 
-    // Convierte una lista de celdas vacías en área capturada (con visual)
+    // Convierte una lista de celdas vacías en área capturada (usando el visual del borde)
     private void FillCells(List<Vector2Int> cells)
     {
         // Para cada celda del grupo seleccionado
@@ -300,9 +338,9 @@ public class GridManager : MonoBehaviour
             // Cambiamos su estado lógico a capturada
             _gridMatrix[cell.x, cell.y] = CellState.Captured;
 
-            // Creamos visualmente el bloque en su posición
+            // Creamos visual con el prefab del borde (mismo aspecto que el borde)
             Vector2 position = new Vector2(cell.x, cell.y);
-            Instantiate(trailPrefab, position, Quaternion.identity, transform);
+            Instantiate(cellPrefab, position, Quaternion.identity, transform);
         }
     }
 }
