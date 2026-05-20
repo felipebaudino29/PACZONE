@@ -121,7 +121,8 @@ public class GridManager : MonoBehaviour
         return _gridMatrix[x, y] == CellState.Trail;
     }
 
-    // Indica si una posición es una pared para los enemigos (algo pintado o fuera de la grilla)
+    // Indica si una posición es una pared para los enemigos (borde o área capturada)
+    // IMPORTANTE: el rastro NO es pared. El enemigo lo atraviesa y al hacerlo lo destruye.
     public bool IsWallForEnemy(Vector2 position)
     {
         // Si está fuera de la grilla, la consideramos pared (así rebota en el límite)
@@ -134,9 +135,9 @@ public class GridManager : MonoBehaviour
         int x = Mathf.RoundToInt(position.x);
         int y = Mathf.RoundToInt(position.y);
 
-        // El enemigo rebota contra cualquier cosa pintada: borde, rastro o área capturada
+        // El enemigo rebota solo contra el borde y áreas ya capturadas (no contra el rastro)
         CellState state = _gridMatrix[x, y];
-        return state == CellState.Border || state == CellState.Trail || state == CellState.Captured;
+        return state == CellState.Border || state == CellState.Captured;
     }
 
     // Método público que marca una celda como rastro si estaba vacía
@@ -409,5 +410,52 @@ public class GridManager : MonoBehaviour
             Vector2 position = new Vector2(cell.x, cell.y);
             Instantiate(cellPrefab, position, Quaternion.identity, transform);
         }
+    }
+        // Calcula el porcentaje de área del mapa que está capturada (entre 0 y 1)
+    public float GetCapturedPercentage()
+    {
+        // Total de celdas que se pueden capturar (todo lo interno, sin contar el borde)
+        int playableTotal = (columns - 2) * (rows - 2);
+
+        // Contamos cuántas celdas están actualmente en estado Captured
+        int capturedCount = 0;
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                if (_gridMatrix[x, y] == CellState.Captured)
+                {
+                    capturedCount++;
+                }
+            }
+        }
+
+        // Retornamos el porcentaje como número entre 0 y 1
+        return (float)capturedCount / playableTotal;
+    }
+    // Borra todo el rastro pendiente: las celdas Trail vuelven a Empty y se destruyen sus GameObjects
+    public void ResetCurrentTrail()
+    {
+        // Devolvemos a Empty todas las celdas que estaban en estado Trail
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                if (_gridMatrix[x, y] == CellState.Trail)
+                {
+                    _gridMatrix[x, y] = CellState.Empty;
+                }
+            }
+        }
+
+        // Destruimos los GameObjects visuales del rastro
+        foreach (GameObject trailObject in _activeTrailObjects)
+        {
+            Destroy(trailObject);
+        }
+        _activeTrailObjects.Clear();
+
+        // Limpiamos la bandera para que el próximo rastro arranque limpio
+        _hasPendingTrail = false;
     }
 }

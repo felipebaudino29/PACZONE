@@ -8,6 +8,12 @@ public class PlayerController : MonoBehaviour
     // Referencia pública a nuestro GridManager para poder hacerle consultas
     public GridManager gridManager;
 
+    // Referencia al GameManager para saber si el juego está activo
+    public GameManager gameManager;
+
+    // Posición de inicio del personaje (se guarda al arrancar)
+    private Vector2 _startPosition;
+
     // La posición exacta de la celda a la que nos estamos moviendo
     private Vector2 _targetPosition;
 
@@ -16,12 +22,21 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        // Guardamos la posición inicial para volver acá si perdemos una vida
+        _startPosition = transform.position;
+
         // Al iniciar, nuestro primer objetivo es nuestra propia posición de inicio
         _targetPosition = transform.position;
     }
 
     private void Update()
     {
+        // Si el juego no está en curso (victoria o derrota), no hacemos nada
+        if (gameManager != null && !gameManager.IsPlaying())
+        {
+            return;
+        }
+
         // Solo verificamos el teclado y definimos una ruta SI ya llegamos a la celda objetivo
         if (Vector2.Distance(transform.position, _targetPosition) < 0.01f)
         {
@@ -34,15 +49,14 @@ public class PlayerController : MonoBehaviour
             // Le pedimos a la grilla que intente cerrar el rastro si estamos en zona permanente
             gridManager.TryCloseTrail(transform.position);
 
-            // Le preguntamos a la grilla si estamos parados en zona segura (borde o área capturada)
+            // Le preguntamos a la grilla si estamos parados en zona segura
             bool isOnSafeZone = gridManager.IsSafePosition(transform.position);
 
             // Capturamos el input de las teclas (WASD o Flechas)
             float moveX = Input.GetAxisRaw("Horizontal");
             float moveY = Input.GetAxisRaw("Vertical");
 
-            // Si hay tecla apretada, intentamos actualizar la dirección
-            // Solo aceptamos el cambio si la nueva dirección NO lleva al rastro propio
+            // Si hay tecla apretada, intentamos actualizar la dirección (solo si no lleva al rastro)
             if (moveX != 0)
             {
                 Vector2 candidateDirection = new Vector2(moveX, 0);
@@ -66,26 +80,35 @@ public class PlayerController : MonoBehaviour
                 // En zona segura y sin tecla apretada, frenamos el movimiento
                 _currentDirection = Vector2.zero;
             }
-            // Si NO estamos en zona segura y no hay input, mantenemos la dirección anterior (continuo)
 
-            // Calculamos cuál sería la próxima celda teórica a la que queremos ir
+            // Calculamos cuál sería la próxima celda teórica
             Vector2 possibleTarget = (Vector2)transform.position + _currentDirection;
 
             // Confirmamos el movimiento solo si hay dirección, es válida la posición Y no es rastro
-            if (_currentDirection != Vector2.zero 
-                && gridManager.IsValidPosition(possibleTarget) 
+            if (_currentDirection != Vector2.zero
+                && gridManager.IsValidPosition(possibleTarget)
                 && !gridManager.IsTrailCell(possibleTarget))
             {
                 _targetPosition = possibleTarget;
             }
             else
             {
-                // Si no hay para dónde ir (límite o rastro), frenamos
                 _currentDirection = Vector2.zero;
             }
         }
 
         // Movemos físicamente al personaje hacia el objetivo frame a frame
         transform.position = Vector2.MoveTowards(transform.position, _targetPosition, moveSpeed * Time.deltaTime);
+    }
+
+    // Método público para reposicionar al jugador en su posición de inicio
+    public void ResetToStart()
+    {
+        // Volvemos a la posición original
+        transform.position = _startPosition;
+
+        // Sincronizamos el objetivo y la dirección para que no quede movimiento residual
+        _targetPosition = _startPosition;
+        _currentDirection = Vector2.zero;
     }
 }
