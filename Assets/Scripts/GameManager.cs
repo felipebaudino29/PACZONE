@@ -99,6 +99,18 @@ public class GameManager : MonoBehaviour
         return _state == GameState.Playing;
     }
 
+        // Indica si el jugador ganó la partida
+    public bool HasWon()
+    {
+        return _state == GameState.Won;
+    }
+
+    // Indica si el jugador perdió la partida
+    public bool HasLost()
+    {
+        return _state == GameState.Lost;
+    }
+
     // Se ejecuta cuando se alcanza el porcentaje de victoria
     private void OnVictory()
     {

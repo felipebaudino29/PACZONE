@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     // Referencia pública a nuestro GridManager para poder hacerle consultas
     public GridManager gridManager;
 
-    // Referencia al GameManager para saber si el juego está activo
+    // Referencia al GameManager para saber si el juego está activo y avisar colisiones
     public GameManager gameManager;
 
     // Posición de inicio del personaje (se guarda al arrancar)
@@ -56,12 +56,11 @@ public class PlayerController : MonoBehaviour
             float moveX = Input.GetAxisRaw("Horizontal");
             float moveY = Input.GetAxisRaw("Vertical");
 
-            // Si hay tecla apretada, intentamos actualizar la dirección (solo si no lleva al rastro)
+            // Actualizamos la dirección. En zona vacía ignoramos el reverso exacto (marcha atrás)
             if (moveX != 0)
             {
                 Vector2 candidateDirection = new Vector2(moveX, 0);
-                Vector2 candidateTarget = (Vector2)transform.position + candidateDirection;
-                if (!gridManager.IsTrailCell(candidateTarget))
+                if (isOnSafeZone || candidateDirection != -_currentDirection)
                 {
                     _currentDirection = candidateDirection;
                 }
@@ -69,8 +68,7 @@ public class PlayerController : MonoBehaviour
             else if (moveY != 0)
             {
                 Vector2 candidateDirection = new Vector2(0, moveY);
-                Vector2 candidateTarget = (Vector2)transform.position + candidateDirection;
-                if (!gridManager.IsTrailCell(candidateTarget))
+                if (isOnSafeZone || candidateDirection != -_currentDirection)
                 {
                     _currentDirection = candidateDirection;
                 }
@@ -84,15 +82,26 @@ public class PlayerController : MonoBehaviour
             // Calculamos cuál sería la próxima celda teórica
             Vector2 possibleTarget = (Vector2)transform.position + _currentDirection;
 
-            // Confirmamos el movimiento solo si hay dirección, es válida la posición Y no es rastro
-            if (_currentDirection != Vector2.zero
-                && gridManager.IsValidPosition(possibleTarget)
-                && !gridManager.IsTrailCell(possibleTarget))
+            // Procesamos el movimiento según lo que haya en la celda destino
+            if (_currentDirection != Vector2.zero && gridManager.IsValidPosition(possibleTarget))
             {
-                _targetPosition = possibleTarget;
+                if (gridManager.IsTrailCell(possibleTarget))
+                {
+                    // El jugador toca su propio rastro: pierde una vida
+                    if (gameManager != null)
+                    {
+                        gameManager.HandlePlayerHit();
+                    }
+                }
+                else
+                {
+                    // Celda libre: confirmamos el movimiento
+                    _targetPosition = possibleTarget;
+                }
             }
             else
             {
+                // Si no hay para dónde ir (límite del mapa), frenamos
                 _currentDirection = Vector2.zero;
             }
         }
