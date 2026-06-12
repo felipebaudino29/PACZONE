@@ -35,14 +35,11 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        // Inicializamos la matriz matemática con las dimensiones asignadas
+        // Solo inicializamos la matriz lógica. La parte visual la dispara el GameManager al darle Play
         _gridMatrix = new CellState[columns, rows];
-        
-        // Llamamos al método para configurar la grilla al inicio del nivel
-        GenerateInitialGrid();
     }
 
-    private void GenerateInitialGrid()
+    public void GenerateInitialGrid()
     {
         // Recorremos cada columna de la matriz
         for (int x = 0; x < columns; x++)

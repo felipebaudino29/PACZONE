@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
     // Porcentaje de área que hay que capturar para ganar (entre 0 y 1)
     public float winThreshold = 0.85f;
 
-    // Referencia al GridManager para consultar el porcentaje capturado y reiniciar el rastro
+    // Referencia al GridManager para consultar el porcentaje y reiniciar el rastro
     public GridManager gridManager;
 
     // Referencia al PlayerController para reposicionarlo cuando pierde una vida
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     // Enumeración con los posibles estados del juego
     private enum GameState
     {
+        NotStarted,
         Playing,
         Won,
         Lost
@@ -30,51 +32,74 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Al iniciar, las vidas son las del valor configurado y el estado es "jugando"
+        // Al iniciar arrancamos con las vidas configuradas y en estado "no iniciado"
         _currentLives = startingLives;
-        _state = GameState.Playing;
+        _state = GameState.NotStarted;
     }
 
     private void Update()
     {
-        // Si el juego ya terminó, no hacemos más controles
+        // Solo chequeamos victoria si estamos jugando
         if (_state != GameState.Playing)
         {
             return;
         }
 
-        // Le preguntamos a la grilla el porcentaje actual capturado
+        // Consultamos el porcentaje a la grilla
         float progress = gridManager.GetCapturedPercentage();
 
-        // Si llegamos o superamos el umbral, ganamos
+        // Si superamos el umbral, ganamos
         if (progress >= winThreshold)
         {
             OnVictory();
         }
     }
 
-    // Método público que los enemigos llamarán cuando golpeen al jugador o al rastro
+        // Lo llama el botón Play: genera la grilla, activa jugador y enemigos, arranca la partida
+    public void StartGame()
+    {
+        if (_state != GameState.NotStarted)
+        {
+            return;
+        }
+
+        // Generamos visualmente el borde de la grilla
+        gridManager.GenerateInitialGrid();
+
+        // Activamos al jugador (estaba desactivado en la escena)
+        playerController.gameObject.SetActive(true);
+
+        // Buscamos todos los enemigos (incluyendo los desactivados) y los activamos
+        EnemyController[] enemies = FindObjectsByType<EnemyController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (EnemyController enemy in enemies)
+        {
+            enemy.gameObject.SetActive(true);
+        }
+
+        // Cambiamos el estado a Playing para que el resto del sistema se mueva
+        _state = GameState.Playing;
+    }
+
+    // Lo llama el botón Reiniciar: recarga la escena entera
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Método público que los enemigos llaman cuando golpean al jugador o al rastro
     public void HandlePlayerHit()
     {
-        // Si el juego ya terminó, ignoramos
         if (_state != GameState.Playing)
         {
             return;
         }
 
-        // Restamos una vida
         _currentLives--;
-
-        // Log para verificar el funcionamiento (después lo reemplazamos por UI)
         Debug.Log("Vida perdida. Vidas restantes: " + _currentLives);
 
-        // Borramos el rastro pendiente del mapa
         gridManager.ResetCurrentTrail();
-
-        // Reposicionamos al jugador en su punto de inicio
         playerController.ResetToStart();
 
-        // Si no quedan vidas, se perdió el juego
         if (_currentLives <= 0)
         {
             OnDefeat();
@@ -99,7 +124,13 @@ public class GameManager : MonoBehaviour
         return _state == GameState.Playing;
     }
 
-        // Indica si el jugador ganó la partida
+    // Indica si todavía no se inició la partida
+    public bool HasNotStarted()
+    {
+        return _state == GameState.NotStarted;
+    }
+
+    // Indica si el jugador ganó la partida
     public bool HasWon()
     {
         return _state == GameState.Won;
