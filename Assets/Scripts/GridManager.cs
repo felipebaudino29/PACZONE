@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 // Enumeración para definir los posibles estados lógicos de una celda
 public enum CellState
 {
@@ -12,6 +13,12 @@ public enum CellState
 
 public class GridManager : MonoBehaviour
 {
+    [Header("Audio")]
+    // AudioSource dedicado a los efectos de la grilla
+    [SerializeField] private AudioSource sfxSource;
+    // Sonido que se reproduce cuando el jugador captura una zona
+    [SerializeField] private AudioClip captureSound;
+    
     // Cantidad de columnas (ancho de la grilla)
     public int columns = 50;
     
@@ -230,6 +237,9 @@ public class GridManager : MonoBehaviour
             // Destruimos el visual viejo del rastro
             Destroy(trailObject);
         }
+
+        // Reproducimos el sonido de captura exitosa
+        sfxSource.PlayOneShot(captureSound);
 
         // Vaciamos la lista porque ya no hay rastro pendiente
         _activeTrailObjects.Clear();

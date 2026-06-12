@@ -1,8 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+
 public class GameManager : MonoBehaviour
 {
+    [Header("Audio")]
+    // AudioSource dedicado a la música de fondo (loopea durante toda la partida)
+    [SerializeField] private AudioSource musicSource;
+    // AudioSource dedicado a los efectos de sonido (los reproduce con PlayOneShot)
+    [SerializeField] private AudioSource sfxSource;
+    // Sonido que se reproduce cuando el jugador pierde una vida
+    [SerializeField] private AudioClip loseLifeSound;
+    // Sonido que se reproduce cuando el jugador gana la partida
+    [SerializeField] private AudioClip victorySound;
+    // Sonido que se reproduce cuando el jugador pierde la partida
+    [SerializeField] private AudioClip gameOverSound;
+
     // Cantidad de vidas con las que arranca el jugador
     public int startingLives = 3;
 
@@ -38,45 +52,40 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update()
+{
+    if (_state != GameState.Playing)
     {
-        // Solo chequeamos victoria si estamos jugando
-        if (_state != GameState.Playing)
-        {
-            return;
-        }
-
-        // Consultamos el porcentaje a la grilla
-        float progress = gridManager.GetCapturedPercentage();
-
-        // Si superamos el umbral, ganamos
-        if (progress >= winThreshold)
-        {
-            OnVictory();
-        }
+        return;
     }
 
-        // Lo llama el botón Play: genera la grilla, activa jugador y enemigos, arranca la partida
-    public void StartGame()
+    if (gridManager.GetCapturedPercentage() >= winThreshold)
+    {
+        // Frenamos la música y reproducimos el sonido de victoria
+        musicSource.Stop();
+        sfxSource.PlayOneShot(victorySound);
+        _state = GameState.Won;
+    }
+}
+
+        public void StartGame()
     {
         if (_state != GameState.NotStarted)
         {
             return;
         }
 
-        // Generamos visualmente el borde de la grilla
         gridManager.GenerateInitialGrid();
-
-        // Activamos al jugador (estaba desactivado en la escena)
         playerController.gameObject.SetActive(true);
 
-        // Buscamos todos los enemigos (incluyendo los desactivados) y los activamos
         EnemyController[] enemies = FindObjectsByType<EnemyController>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         foreach (EnemyController enemy in enemies)
         {
             enemy.gameObject.SetActive(true);
         }
 
-        // Cambiamos el estado a Playing para que el resto del sistema se mueva
+        // Arrancamos la música de fondo (el clip y el loop ya están configurados en el inspector)
+        musicSource.Play();
+
         _state = GameState.Playing;
     }
 
@@ -87,22 +96,23 @@ public class GameManager : MonoBehaviour
     }
 
     // Método público que los enemigos llaman cuando golpean al jugador o al rastro
-    public void HandlePlayerHit()
+        public void HandlePlayerHit()
     {
-        if (_state != GameState.Playing)
-        {
-            return;
-        }
-
         _currentLives--;
-        Debug.Log("Vida perdida. Vidas restantes: " + _currentLives);
-
         gridManager.ResetCurrentTrail();
         playerController.ResetToStart();
 
         if (_currentLives <= 0)
         {
-            OnDefeat();
+            // Frenamos la música y reproducimos el sonido de game over
+            musicSource.Stop();
+            sfxSource.PlayOneShot(gameOverSound);
+            _state = GameState.Lost;
+        }
+        else
+        {
+            // Si todavía le quedan vidas, solo suena el efecto de perder vida (la música sigue)
+            sfxSource.PlayOneShot(loseLifeSound);
         }
     }
 
