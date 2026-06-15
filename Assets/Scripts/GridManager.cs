@@ -18,6 +18,12 @@ public class GridManager : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
     // Sonido que se reproduce cuando el jugador captura una zona
     [SerializeField] private AudioClip captureSound;
+
+    [Header("VFX")]
+    // Prefab del efecto de partículas que se reproduce al capturar una zona
+    [SerializeField] private GameObject captureBurstPrefab;
+    // Referencia al transform del jugador, usado para saber dónde aparece el efecto
+    [SerializeField] private Transform playerTransform;
     
     // Cantidad de columnas (ancho de la grilla)
     public int columns = 50;
@@ -240,6 +246,9 @@ public class GridManager : MonoBehaviour
 
         // Reproducimos el sonido de captura exitosa
         sfxSource.PlayOneShot(captureSound);
+
+        // Instanciamos el efecto visual de captura en la posición del jugador
+        Instantiate(captureBurstPrefab, playerTransform.position, Quaternion.identity);
 
         // Vaciamos la lista porque ya no hay rastro pendiente
         _activeTrailObjects.Clear();

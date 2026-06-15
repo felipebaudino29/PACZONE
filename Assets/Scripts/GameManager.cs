@@ -95,26 +95,31 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // Método público que los enemigos llaman cuando golpean al jugador o al rastro
-        public void HandlePlayerHit()
+    // Lo llama el PlayerController cuando el jugador pierde una vida
+    public void HandlePlayerHit()
+{
+    // Si el jugador ya está en la animación de muerte, ignoramos el hit
+    if (playerController.IsDead())
     {
-        _currentLives--;
-        gridManager.ResetCurrentTrail();
-        playerController.ResetToStart();
-
-        if (_currentLives <= 0)
-        {
-            // Frenamos la música y reproducimos el sonido de game over
-            musicSource.Stop();
-            sfxSource.PlayOneShot(gameOverSound);
-            _state = GameState.Lost;
-        }
-        else
-        {
-            // Si todavía le quedan vidas, solo suena el efecto de perder vida (la música sigue)
-            sfxSource.PlayOneShot(loseLifeSound);
-        }
+        return;
     }
+
+    _currentLives--;
+    gridManager.ResetCurrentTrail();
+
+    if (_currentLives <= 0)
+    {
+        musicSource.Stop();
+        sfxSource.PlayOneShot(gameOverSound);
+        _state = GameState.Lost;
+        playerController.HandleDeath();
+    }
+    else
+    {
+        sfxSource.PlayOneShot(loseLifeSound);
+        playerController.HandleDeath();
+    }
+}
 
     // Devuelve las vidas actuales (lo va a usar la UI)
     public int GetCurrentLives()

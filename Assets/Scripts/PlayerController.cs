@@ -1,7 +1,13 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
+    // Duración (en segundos) de la animación de muerte antes de respawnear
+    [SerializeField] private float deathAnimationDuration = 0.5f;
+
+    // Indica si el jugador está actualmente "muriendo" (no se mueve, no recibe más golpes)
+    private bool _isDead = false;
     // Velocidad a la que el personaje se mueve entre celdas
     public float moveSpeed = 5f;
 
@@ -20,6 +26,16 @@ public class PlayerController : MonoBehaviour
     // Dirección actual en la que viaja el jugador
     private Vector2 _currentDirection;
 
+    // Referencia al Animator del jugador, usada para disparar las animaciones
+    private Animator _animator;
+
+    // Referencia al SpriteRenderer del jugador, usada para espejar el sprite cuando va a la izquierda
+    private SpriteRenderer _spriteRenderer;
+
+    [Header("VFX")]
+    // Prefab del efecto de humo que se reproduce al morir el jugador
+    [SerializeField] private GameObject deathSmokePrefab;
+
     private void Start()
     {
         // Guardamos la posición inicial para volver acá si perdemos una vida
@@ -27,15 +43,28 @@ public class PlayerController : MonoBehaviour
 
         // Al iniciar, nuestro primer objetivo es nuestra propia posición de inicio
         _targetPosition = transform.position;
+
+        // Obtenemos el componente Animator del mismo GameObject
+        _animator = GetComponent<Animator>();
+
+        // Obtenemos el SpriteRenderer del mismo GameObject (sirve para flipear el sprite)
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
-    {
-        // Si el juego no está en curso (victoria o derrota), no hacemos nada
-        if (gameManager != null && !gameManager.IsPlaying())
+        {
+            if (!gameManager.IsPlaying())
         {
             return;
         }
+
+        // Si está en la animación de muerte, no procesamos movimiento ni input
+        if (_isDead)
+        {
+            return;
+        }
+        // Actualizamos la orientación visual del sprite para que mire hacia donde se mueve
+        UpdateVisualOrientation();
 
         // Solo verificamos el teclado y definimos una ruta SI ya llegamos a la celda objetivo
         if (Vector2.Distance(transform.position, _targetPosition) < 0.01f)
@@ -119,5 +148,76 @@ public class PlayerController : MonoBehaviour
         // Sincronizamos el objetivo y la dirección para que no quede movimiento residual
         _targetPosition = _startPosition;
         _currentDirection = Vector2.zero;
+
+        // Reseteamos la orientación visual al estado inicial
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        _spriteRenderer.flipX = false;
+        
     }
+
+    // Permite al GameManager saber si el jugador está en medio de la animación de muerte
+    public bool IsDead()
+    {
+        return _isDead;
+    }
+
+    // Lo llama el GameManager cuando el jugador pierde una vida
+    public void HandleDeath()
+    {
+        // Arrancamos la corutina que maneja la secuencia animación + respawn
+        StartCoroutine(DeathSequence());
+    }
+
+    // Corutina que reproduce la animación de muerte y después respawnea al jugador
+    private IEnumerator DeathSequence()
+    {
+        // Marcamos al jugador como muriendo para que no se mueva ni reciba más hits
+        _isDead = true;
+
+        // Disparamos la animación de muerte en la posición actual
+        _animator.SetTrigger("Die");
+
+        // Instanciamos el efecto de humo en la posición donde murió el jugador
+        Instantiate(deathSmokePrefab, transform.position, Quaternion.identity);
+    
+        // Pausamos la ejecución de la corutina por la duración de la animación
+        yield return new WaitForSeconds(deathAnimationDuration);
+
+        // Después de esperar, reseteamos la posición del jugador al inicio
+        ResetToStart();
+
+        // Marcamos al jugador como vivo de nuevo para que pueda moverse otra vez
+        _isDead = false;
+    }
+
+// Actualiza la rotación y el flip del sprite para que el pacman mire hacia donde se mueve
+private void UpdateVisualOrientation()
+{
+    if (_currentDirection.x > 0)
+    {
+        // Movimiento hacia la derecha: rotación 0, sin flip
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        _spriteRenderer.flipX = false;
+    }
+    else if (_currentDirection.x < 0)
+    {
+        // Movimiento hacia la izquierda: sin rotación pero con flip horizontal
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        _spriteRenderer.flipX = true;
+    }
+    else if (_currentDirection.y > 0)
+    {
+        // Movimiento hacia arriba: rotación de 90 grados
+        transform.rotation = Quaternion.Euler(0, 0, 90);
+        _spriteRenderer.flipX = false;
+    }
+    else if (_currentDirection.y < 0)
+    {
+        // Movimiento hacia abajo: rotación de -90 grados
+        transform.rotation = Quaternion.Euler(0, 0, -90);
+        _spriteRenderer.flipX = false;
+    }
+    // Si la dirección es (0, 0), no cambiamos nada (mantiene la última orientación)
+}
+
 }

@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 411578628}
   - component: {fileID: 411578627}
   - component: {fileID: 411578631}
+  - component: {fileID: 411578632}
   m_Layer: 0
   m_Name: Pacxon
   m_TagString: Untagged
@@ -649,9 +650,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a2c233e47934ed7b128f3d9f533dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  deathAnimationDuration: 0.5
   moveSpeed: 8
   gridManager: {fileID: 1796152209}
   gameManager: {fileID: 626935072}
+  deathSmokePrefab: {fileID: 6493654784857090150, guid: 3b305a507b9b540cf96722a16709233e, type: 3}
+--- !u!95 &411578632
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411578626}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e157a62d5c9e491094d926750081c39, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &456556825
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,7 +947,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25, y: 15, z: -10}
+  m_LocalPosition: {x: 25, y: 18.58, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1813,6 +1838,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
   sfxSource: {fileID: 1796152211}
   captureSound: {fileID: 8300000, guid: 8ae682d0d1f31431bb46a6db2a8d7c8d, type: 3}
+  captureBurstPrefab: {fileID: 6821452169561766115, guid: 2b87d684202564247a0d3d3c242aa8a9, type: 3}
+  playerTransform: {fileID: 411578630}
   columns: 50
   rows: 30
   cellPrefab: {fileID: 8879799879873307799, guid: a81787ec3b97d43149a1cce7ead1d433, type: 3}
