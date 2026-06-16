@@ -32,26 +32,31 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         // Actualizamos los textos de vidas y progreso siempre
-        livesText.text = "Vidas: " + gameManager.GetCurrentLives();
+        livesText.text = "Lives: " + gameManager.GetCurrentLives();
         int progressPercent = Mathf.RoundToInt(gameManager.GetCurrentProgress() * 100f);
-        progressText.text = "Progreso: " + progressPercent + "%";
+        progressText.text = "Progress: " + progressPercent + "%";
 
         // Cambiamos el mensaje central y la visibilidad de los botones según el estado
         if (gameManager.HasNotStarted())
         {
-            messageText.text = "PAC-EATER";
+            // Cada letra de PAC-EATER tiene un color distinto (paleta arcade clásica)
+            messageText.text = "<color=#FFD700>P</color><color=#FF1B1B>A</color><color=#FF69B4>C</color><color=#FFFFFF>-</color><color=#00FFFF>E</color><color=#FFA500>A</color><color=#FFD700>T</color><color=#FF69B4>E</color><color=#00FFFF>R</color>";
+            // El color base lo dejamos blanco para que no tiña los colores de cada letra
+            messageText.color = Color.white;
             playButton.gameObject.SetActive(true);
             restartButton.gameObject.SetActive(false);
         }
         else if (gameManager.HasWon())
         {
-            messageText.text = "VICTORIA";
+            messageText.text = "VICTORY";
+            messageText.color = new Color(1f, 0.84f, 0f); // amarillo arcade
             playButton.gameObject.SetActive(false);
             restartButton.gameObject.SetActive(true);
         }
         else if (gameManager.HasLost())
         {
             messageText.text = "GAME OVER";
+            messageText.color = new Color(0.88f, 0f, 0f); // rojo
             playButton.gameObject.SetActive(false);
             restartButton.gameObject.SetActive(true);
         }
