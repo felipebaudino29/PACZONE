@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     // Sonido que se reproduce cuando el jugador pierde la partida
     [SerializeField] private AudioClip gameOverSound;
 
+    // Prefab del efecto de victoria que se reproduce al llegar al 85% capturado
+    [SerializeField] private GameObject victoryStarsPrefab;
+
     // Cantidad de vidas con las que arranca el jugador
     public int startingLives = 3;
 
@@ -63,6 +66,10 @@ public class GameManager : MonoBehaviour
         // Frenamos la música y reproducimos el sonido de victoria
         musicSource.Stop();
         sfxSource.PlayOneShot(victorySound);
+
+        // Instanciamos el efecto de estrellas en el centro de la grilla
+        Instantiate(victoryStarsPrefab, new Vector3(25, 15, 0), Quaternion.identity);
+
         _state = GameState.Won;
     }
 }

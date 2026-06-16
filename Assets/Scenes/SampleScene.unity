@@ -1209,6 +1209,7 @@ MonoBehaviour:
   loseLifeSound: {fileID: 8300000, guid: 7d4241b25671645b7a8897e37c943014, type: 3}
   victorySound: {fileID: 8300000, guid: 90bd60f17b52c4b6db0eb92add06589b, type: 3}
   gameOverSound: {fileID: 8300000, guid: 079bbf9b22f18411aade28d088e4504e, type: 3}
+  victoryStarsPrefab: {fileID: 6787904525784406207, guid: 4f6c663f82f50496a9512cc699a7149b, type: 3}
   startingLives: 3
   winThreshold: 0.9
   gridManager: {fileID: 1796152209}
@@ -2182,7 +2183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a46c8f1b274354beca52d5329610c599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  moveSpeed: 5
+  moveSpeed: 8
   gridManager: {fileID: 1796152209}
   gameManager: {fileID: 626935072}
   playerTransform: {fileID: 411578630}
